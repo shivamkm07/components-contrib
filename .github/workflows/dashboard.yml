@@ -1,0 +1,44 @@
+name: Build Dashboard
+
+on:
+  push:
+    branches:
+      - dashboard
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v2
+    - name: Check out Dashboard branch
+      uses: actions/checkout@v2
+      with:
+        ref: 'dashboard'
+        path: 'out'
+
+    - name: 'Generate Dashboard'
+      uses: ethomson/issue-dashboard@v1
+      with:
+        config: |
+          title: 'Dashboard'
+          output:
+            format: html
+            filename: 'out/dashboard.html'
+          sections:
+          - title: 'Pull Requests'
+            widgets:
+            - type: 'table'
+              title: 'New Pull Requests (This Week)'
+              issue_query: 'repo:libgit2/libgit2 is:open is:issue created:>{{ date("-7 days") }} sort:created-asc'
+        token: ${{ github.token }}
+
+    - name: Publish Documentation
+      run: |
+        git add .
+        git config user.name 'Dashboard User'
+        git config user.email 'nobody@nowhere'
+        git commit -m 'Dashboard update' --allow-empty
+        git push origin dashboard
+      working-directory: out
