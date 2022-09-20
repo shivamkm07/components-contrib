@@ -24,8 +24,8 @@ jobs:
         config: |
           title: 'Dashboard'
           output:
-            format: html
-            filename: 'out/dashboard.html'
+            format: markdown
+            filename: 'out/dashboard.md'
           sections:
           - title: 'Pull Requests'
             widgets:
