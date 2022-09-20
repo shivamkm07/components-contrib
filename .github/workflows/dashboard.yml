@@ -31,7 +31,44 @@ jobs:
             widgets:
             - type: 'table'
               title: 'New Pull Requests (This Week)'
-              issue_query: 'repo:libgit2/libgit2 is:open is:issue created:>{{ date("-7 days") }} sort:created-asc'
+              issue_query: 'repo:dapr/components-contrib is:open is:issue created:>{{ date("-7 days") }} sort:created-asc'
+
+          - title: 'Issues by labels'
+            widgets:
+            - type: 'number'
+              title:  Bug
+              issue_query: 'repo:dapr/components-contrib is:open is:issue label:kind/bug'
+              color: red
+            - type: 'number'
+              title: 'P1'
+              issue_query: 'repo:dapr/components-contrib is:open is:issue label:P1'
+              color: green
+            - type: 'number'
+              title: 'Good First Issue'
+              issue_query: 'repo:dapr/components-contrib is:open is:issue label:"good first issue" '
+              color: blue
+            - type: 'number'
+              title: 'Help wanted'
+              issue_query: 'repo:dapr/components-contrib is:open is:issue label:"help wanted" '
+
+          - title: 'Issues by Age'
+            widgets: 
+            - type: 'graph'
+              title: 'Age'
+              elements:
+              - title: '7 days'
+                color: 'green'
+                issue_query: 'repo:dapr/components-contrib is:issue is:open created:<{{ date("-7 day") }}'
+              - title: '30 days'
+                color: 'blue'
+                issue_query: 'repo:dapr/components-contrib is:issue is:open created:<{{ date("-1 month") }}'
+              - title: '90 days'
+                color: 'black'
+                issue_query: 'repo:dapr/components-contrib is:issue is:open created:<{{ date("-3 month") }}'
+              - title: '7 days'
+                color: 'green'
+                issue_query: 'repo:dapr/components-contrib is:issue is:open created:<{{ date("-1 year") }}'
+          
         token: ${{ github.token }}
 
     - name: Publish Documentation
