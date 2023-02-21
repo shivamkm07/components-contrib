@@ -283,6 +283,14 @@ jobs:
           echo "CERTIFICATION_FAILURE=false" >> $GITHUB_ENV
         fi
 
+    - name: Upload Cert Coverage Entire File Artifact
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: cert_code_cov
+        path: tmp/cert_code_cov_files
+        retention-days: 1
+
     - name: Prepare test result info
       if: always()
       run: |
@@ -322,14 +330,6 @@ jobs:
     #    mkdir -p tmp/cert_code_cov_files
     #    cp 
     #    echo "$(<cover.out )" >> tmp/actual_cov_files/${{ env.SOURCE_PATH_LINEAR }}.out
-
-    - name: Upload Cert Coverage Entire File Artifact
-      uses: actions/upload-artifact@v3
-      if: always()
-      with:
-        name: cert_code_cov
-        path: tmp/cert_code_cov_files
-        retention-days: 1
 
     - name: Component Coverage Discord Notification
       if: github.event_name == 'schedule'
