@@ -263,6 +263,7 @@ jobs:
         cat cover.out
         echo tmp/cert_code_cov_files/${{ env.SOURCE_PATH_LINEAR }}.out
         cat cover.out >> tmp/cert_code_cov_files/${{ env.SOURCE_PATH_LINEAR }}.out
+        cat tmp/cert_code_cov_files/${{ env.SOURCE_PATH_LINEAR }}.out
 
         # Fail the step if we found no test to run
         if grep -q "\[no test files\]" ${{ env.TEST_OUTPUT_FILE_PREFIX }}_certification.json ; then
