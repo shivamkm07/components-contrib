@@ -273,6 +273,8 @@ jobs:
         fi
         set -e
 
+        cat cover.out
+
         COVERAGE_REPORT=$(gocov convert cover.out | gocov report)
         COVERAGE_LINE=$(echo $COVERAGE_REPORT  | grep -oP '(?<=Total Coverage:).*') # example: "80.00% (40/50)"
         COVERAGE_PERCENTAGE=$(echo $COVERAGE_LINE | grep -oP '([0-9\.]*)' | head -n 1) # example "80.00"
