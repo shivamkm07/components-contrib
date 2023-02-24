@@ -17,7 +17,7 @@ const components = {
             'AzureCertificationServicePrincipalClientId',
             'AzureCertificationServicePrincipalClientSecret',
         ],
-        sourcePkg: 'bindings/azure/blobstorage',
+        sourcePkg: 'azure/blobstorage',
     },
     'bindings.azure.cosmosdb': {
         conformance: true,
@@ -32,7 +32,7 @@ const components = {
             'AzureCertificationServicePrincipalClientId',
             'AzureCertificationServicePrincipalClientSecret',
         ],
-        sourcePkg: 'bindings/azure/cosmosdb',
+        sourcePkg: 'azure/cosmosdb',
     },
     'bindings.azure.eventgrid': {
         conformance: true,
@@ -119,17 +119,17 @@ const components = {
     'bindings.mqtt3-emqx': {
         conformance: true,
         conformanceSetup: 'docker-compose.sh emqx',
-        sourcePkg: 'bindings/mqtt3',
+        sourcePkg: 'mqtt3',
     },
     'bindings.mqtt3-mosquitto': {
         conformance: true,
         conformanceSetup: 'docker-compose.sh mosquitto',
-        sourcePkg: 'bindings/mqtt3',
+        sourcePkg: 'mqtt3',
     },
     'bindings.mqtt3-vernemq': {
         conformance: true,
         conformanceSetup: 'docker-compose.sh vernemq',
-        sourcePkg: 'bindings/mqtt3',
+        sourcePkg: 'mqtt3',
     },
     'bindings.postgres': {
         conformance: true,
@@ -147,12 +147,12 @@ const components = {
     'bindings.redis.v6': {
         conformance: true,
         conformanceSetup: 'docker-compose.sh redisjson redis',
-        sourcePkg: 'bindings/redis',
+        sourcePkg: 'redis',
     },
     'bindings.redis.v7': {
         conformance: true,
         conformanceSetup: 'docker-compose.sh redis7 redis',
-        sourcePkg: 'bindings/redis',
+        sourcePkg: 'redis',
     },
     'configuration.redis.v6': {
         conformance: true,
@@ -247,12 +247,12 @@ const components = {
     'pubsub.mqtt3-emqx': {
         conformance: true,
         conformanceSetup: 'docker-compose.sh emqx',
-        sourcePkg: 'pubsub/mqtt3',
+        sourcePkg: 'mqtt3',
     },
     'pubsub.mqtt3-vernemq': {
         conformance: true,
         conformanceSetup: 'docker-compose.sh vernemq',
-        sourcePkg: 'pubsub/mqtt3',
+        sourcePkg: 'mqtt3',
     },
     'pubsub.natsstreaming': {
         conformance: true,
