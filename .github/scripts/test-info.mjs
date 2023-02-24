@@ -32,6 +32,7 @@ const components = {
             'AzureCertificationServicePrincipalClientId',
             'AzureCertificationServicePrincipalClientSecret',
         ],
+        sourcePkg: 'bindings/azure/cosmosdb',
     },
     'bindings.azure.eventgrid': {
         conformance: true,
