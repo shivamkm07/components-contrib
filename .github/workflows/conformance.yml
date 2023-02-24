@@ -263,8 +263,8 @@ jobs:
         set +e
         gotestsum --jsonfile ${{ env.TEST_OUTPUT_FILE_PREFIX }}_conformance.json \
           --junitfile ${{ env.TEST_OUTPUT_FILE_PREFIX }}_conformance.xml --format standard-verbose -- \
-          -tags=conftests ./tests/conformance --run="Test${KIND_UPPER}Conformance/${NAME}" -coverprofile=cover.out \
-          -covermode=set -coverpkg=-coverpkg=${{ env.SOURCE_PATH }}
+          -tags=conftests ./tests/conformance --run="Test${KIND_UPPER}Conformance/${NAME}" -covrproefile=cover.out \
+          -covermode=set -coverpkg=github.com/dapr/components-contrib/${KIND}/${NAME}/...
 
         status=$?
         echo "Completed tests for Test${KIND_UPPER}Conformance/${KIND}/${NAME} ... "
