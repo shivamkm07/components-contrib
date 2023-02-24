@@ -117,14 +117,17 @@ const components = {
     'bindings.mqtt3-emqx': {
         conformance: true,
         conformanceSetup: 'docker-compose.sh emqx',
+        sourcePkg: 'bindings/mqtt3',
     },
     'bindings.mqtt3-mosquitto': {
         conformance: true,
         conformanceSetup: 'docker-compose.sh mosquitto',
+        sourcePkg: 'bindings/mqtt3',
     },
     'bindings.mqtt3-vernemq': {
         conformance: true,
         conformanceSetup: 'docker-compose.sh vernemq',
+        sourcePkg: 'bindings/mqtt3',
     },
     'bindings.postgres': {
         conformance: true,
@@ -142,10 +145,12 @@ const components = {
     'bindings.redis.v6': {
         conformance: true,
         conformanceSetup: 'docker-compose.sh redisjson redis',
+        sourcePkg: 'bindings/redis',
     },
     'bindings.redis.v7': {
         conformance: true,
         conformanceSetup: 'docker-compose.sh redis7 redis',
+        sourcePkg: 'bindings/redis',
     },
     'configuration.redis.v6': {
         conformance: true,
@@ -240,10 +245,12 @@ const components = {
     'pubsub.mqtt3-emqx': {
         conformance: true,
         conformanceSetup: 'docker-compose.sh emqx',
+        sourcePkg: 'pubsub/mqtt3',
     },
     'pubsub.mqtt3-vernemq': {
         conformance: true,
         conformanceSetup: 'docker-compose.sh vernemq',
+        sourcePkg: 'pubsub/mqtt3',
     },
     'pubsub.natsstreaming': {
         conformance: true,
@@ -488,6 +495,7 @@ const components = {
  * @property {string?} certificationDestroy Destroy script for certification tests
  * @property {string?} nodeJsVersion If set, installs the specified Node.js version
  * @property {string?} mongoDbVersion If set, installs the specified MongoDB version
+ * @property {string?} sourcePkg If set, sets the specified source package
  */
 
 /**
@@ -504,6 +512,7 @@ const components = {
  * @property {string?} destroy-script Destroy script
  * @property {string?} nodejs-version Install the specified Node.js version if set
  * @property {string?} mongodb-version Install the specified MongoDB version if set
+ * @property {string?} source-pkg Source package
  */
 
 /**
@@ -554,6 +563,7 @@ function GenerateMatrix(testKind, enableCloudTests) {
             'destroy-script': comp[testKind + 'Destroy'] || undefined,
             'nodejs-version': comp.nodeJsVersion || undefined,
             'mongodb-version': comp.mongoDbVersion || undefined,
+            'source-pkg': comp.sourcePkg || undefined,
         })
     }
 
