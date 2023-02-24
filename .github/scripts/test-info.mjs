@@ -17,6 +17,7 @@ const components = {
             'AzureCertificationServicePrincipalClientId',
             'AzureCertificationServicePrincipalClientSecret',
         ],
+        sourcePkg: 'bindings/azure/blobstorage',
     },
     'bindings.azure.cosmosdb': {
         conformance: true,
