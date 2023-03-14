@@ -290,7 +290,7 @@ jobs:
       if: always()
       with:
         name: cert_code_cov
-        path: tmp/cert_code_cov_files
+        path: ${{ env.TEST_PATH }}/tmp/cert_code_cov_files
         retention-days: 1
 
     - name: Prepare test result info
