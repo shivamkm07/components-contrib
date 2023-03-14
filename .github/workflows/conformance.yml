@@ -332,7 +332,7 @@ jobs:
         retention-days: 1
     
     - name: Prepare complete coverage report file to upload
-      if: always(s)
+      if: always()
       run: |
         mkdir -p tmp/cover-out
         cp cover.out tmp/cover-out/${{ env.SOURCE_PATH_LINEAR }}.txt
