@@ -335,7 +335,7 @@ jobs:
       if: always()
       run: |
         mkdir -p tmp/cover-out
-        cp cover.out tmp/cover-out/${{ env.SOURCE_PATH_LINEAR }}.txt
+        cp cover.out tmp/cover-out/${{ env.SOURCE_PATH_LINEAR }}.out
     
     - name: Upload coverage report file
       uses: actions/upload-artifact@v3
