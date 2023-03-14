@@ -330,6 +330,19 @@ jobs:
         name: result_files
         path: tmp/result_files
         retention-days: 1
+    
+    - name: Prepare complete coverage report file to upload
+      if: always
+      run: |
+        mkdir -p tmp/cover-out
+        cp cover.out tmp/cover-out/${{ env.SOURCE_PATH_LINEAR }}.txt
+    
+    - name: Upload coverage report file
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: cover-out
+        path: tmp/cover-out
 
     - name: Prepare Conf Coverage Info
       if: always()
