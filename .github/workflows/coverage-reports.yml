@@ -118,6 +118,10 @@ jobs:
             DISCORD_ARG="${DISCORD_ARG} Total Coverage for Certification Tests is ${totalPer}%. ${aboveThreshold} out of ${totalComps} components have certification tests with code coverage > ${threshold}%"
             echo ${DISCORD_ARG}
             echo "DISCORD_ARG=${DISCORD_ARG}" >> $GITHUB_ENV
+        
+        - name: Sending Discord notification
+          run: |
+            curl -H "Content-Type: application/json" -X POST -d '{"content":  "'"  ${DISCORD_ARG}  "'"}'  "${{ secrets.MY_DISCORD_WEBHOOK }}"
 
         # - name: Final Coverage Discord Notification
         #   if: success() #&& github.event_name == 'schedule'
@@ -128,9 +132,3 @@ jobs:
         #   with:
         #     args: '{{ DISCORD_ARG }}'
         
-        - name: send custom message with args
-          uses: appleboy/discord-action@master
-          with:
-            webhook_id: ${{ secrets.MY_DISCORD_WEBHOOK }}
-            webhook_token: ""
-            args: '{{ DISCORD_ARG }}'
