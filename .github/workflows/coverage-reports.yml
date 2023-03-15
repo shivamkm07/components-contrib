@@ -133,4 +133,4 @@ jobs:
           with:
             webhook_id: ${{ secrets.MY_DISCORD_WEBHOOK }}
             webhook_token: ""
-            args: '${{ DISCORD_ARG }}'
+            args: '{{ DISCORD_ARG }}'
