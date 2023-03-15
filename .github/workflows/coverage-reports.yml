@@ -19,9 +19,9 @@ on:
   workflow_dispatch:
   # schedule:
   #   - cron: '25 */8 * * *'
-  push:
-    branches:
-      - aggregate_coverage
+  # push:
+  #   branches:
+  #     - aggregate_coverage
   # pull_request:
   #   branches:
   #     # TODO: REMOVE "master" BEFORE MERGING
