@@ -15,7 +15,7 @@ name: Publishing test coverage reports of components
 
 on:
   repository_dispatch:
-    types: [certification-test]
+    types: [coverage-report]
   workflow_dispatch:
   # schedule:
   #   - cron: '25 */8 * * *'
@@ -57,5 +57,20 @@ jobs:
             if_no_artifact_found: warn
             name: cert_code_cov
             path: tmp/cert_code_cov
+        
+        - name: Download workflow artifact
+          if: always()
+          uses: dawidd6/action-download-artifact@v2.24.3
+          with:
+            workflow: conformance.yml
+            workflow_conclusion: "success"
+            branch: aggregate_coverage
+            if_no_artifact_found: warn
+            name: cert_code_cov
+            path: tmp/conf_code_cov
+        
+        - name: list all downloaded artifacts
+          run: |
+            find tmp/
 
         
