@@ -99,6 +99,7 @@ jobs:
               cp ${file} ${fileName}
               COMPONENT_NAME=${fileName%.out}
               COVERAGE_REPORT=$(gocov convert ${fileName} | gocov report)
+              echo $COVERAGE_REPORT
               COVERAGE_LINE=$(echo $COVERAGE_REPORT | grep "Total Coverage:" | sed 's/Total Coverage: //g') # example: "80.00% (40/50)"
               DISCORD_ARG="${DISCORD_ARG} Test Coverage for ${COMPONENT_NAME} is ${COVERAGE_LINE}\n"
 
