@@ -120,7 +120,7 @@ jobs:
             echo "DISCORD_ARG=${DISCORD_ARG}" >> $GITHUB_ENV
 
         - name: Final Coverage Discord Notification
-          if: success() && github.event_name == 'schedule'
+          if: success() #&& github.event_name == 'schedule'
           env:
             DISCORD_WEBHOOK: ${{ secrets.MY_DISCORD_WEBHOOK }}
           uses: Ilshidur/action-discord@0c4b27844ba47cb1c7bee539c8eead5284ce9fa9
