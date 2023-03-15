@@ -99,7 +99,6 @@ jobs:
               cp ${file} ${fileName}
               COMPONENT_NAME=${fileName%.out}
               COVERAGE_REPORT=$(gocov convert ${fileName} | gocov report)
-              echo $COVERAGE_REPORT
               COVERAGE_LINE=$(echo $COVERAGE_REPORT | grep "Total Coverage:" | sed 's/.*Total Coverage: //g') # example: "80.00% (40/50)"
               DISCORD_ARG="${DISCORD_ARG} Test Coverage for ${COMPONENT_NAME} is ${COVERAGE_LINE}\n"
 
@@ -120,11 +119,11 @@ jobs:
             echo ${DISCORD_ARG}
             echo "DISCORD_ARG=${DISCORD_ARG}" >> $GITHUB_ENV
 
-        # - name: Final Coverage Discord Notification
-        #   if: success() && github.event_name == 'schedule'
-        #   env:
-        #     DISCORD_WEBHOOK: ${{ secrets.DISCORD_MONITORING_WEBHOOK_URL }}
-        #   uses: Ilshidur/action-discord@0c4b27844ba47cb1c7bee539c8eead5284ce9fa9
-        #   continue-on-error: true
-        #   with:
-        #     args: '{{ DISCORD_ARG }}'
+        - name: Final Coverage Discord Notification
+          if: success() && github.event_name == 'schedule'
+          env:
+            DISCORD_WEBHOOK: ${{ secrets.MY_DISCORD_WEBHOOK }}
+          uses: Ilshidur/action-discord@0c4b27844ba47cb1c7bee539c8eead5284ce9fa9
+          continue-on-error: true
+          with:
+            args: '{{ DISCORD_ARG }}'
