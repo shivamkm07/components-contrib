@@ -54,7 +54,7 @@ jobs:
             workflow: certification.yml
             workflow_conclusion: "success"
             branch: aggregate_coverage
-            if_no_artifact_found: warn
+            if_no_artifact_found: error
             name: cert_code_cov
             path: tmp/cert_code_cov
         
@@ -65,8 +65,8 @@ jobs:
             workflow: conformance.yml
             workflow_conclusion: "success"
             branch: aggregate_coverage
-            if_no_artifact_found: warn
-            name: cert_code_cov
+            if_no_artifact_found: error
+            name: conf_code_cov
             path: tmp/conf_code_cov
         
         - name: list all downloaded artifacts
