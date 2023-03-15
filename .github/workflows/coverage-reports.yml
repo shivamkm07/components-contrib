@@ -40,7 +40,13 @@ jobs:
           uses: actions/setup-go@v3
           with:
             go-version: ${{ env.GOVER }}
-        
+
+        - name: Check out code
+          uses: actions/checkout@v3
+          with:
+            repository: ${{ env.CHECKOUT_REPO }}
+            ref: ${{ env.CHECKOUT_REF }}
+
         - name: Setup go dependencies
           run: |
             go install github.com/axw/gocov/gocov@v1.1.0
@@ -72,5 +78,52 @@ jobs:
         - name: list all downloaded artifacts
           run: |
             find tmp/
-
         
+        - name: Merge conformance and certification coverage reports
+          run: |
+            set -e
+            bash .scripts/gocovmerge.sh tmp/conf_code_cov tmp/cert_code_cov tmp/final_code_cov
+        
+        - name: Generate Coverage reports for each component
+          run: |
+            set -e
+            DISCORD_ARG=""
+            numerator=0
+            denominator=0
+            threshold=60.0
+            aboveThreshold=0
+            totalComps=0
+            for file in tmp/final_code_cov/*
+            do
+              fileName=$(basename ${file})
+              cp ${file} ${fileName}
+              COMPONENT_NAME=${fileName%.out}
+              COVERAGE_REPORT=$(gocov convert ${fileName} | gocov report)
+              COVERAGE_LINE=$(echo $COVERAGE_REPORT | grep "Total Coverage:" | sed 's/Total Coverage: //g') # example: "80.00% (40/50)"
+              DISCORD_ARG="${DISCORD_ARG} Test Coverage for ${COMPONENT_NAME} is ${COVERAGE_LINE}\n"
+
+              ratio=$(echo ${COVERAGE_LINE} | cut -d "(" -f2 | cut -d ")" -f1)
+              prcnt=$(echo ${COVERAGE_LINE} | cut -d "(" -f1)
+              tempPrcnt=$(echo $prcnt | cut -d'%' -f1)
+              if [[ $tempPrcnt > $threshold ]]; then 
+                aboveThreshold=$(($aboveThreshold+1))
+              fi
+              totalComps=$(($totalComps+1))
+              tempNumerator=$(echo $ratio | cut -d'/' -f1)
+              tempDenominator=$(echo $ratio | cut -d'/' -f2)
+              numerator=$(($numerator+$tempNumerator))
+              denominator=$(($denominator+$tempDenominator))
+            done
+            totalPer=$(awk "BEGIN { print (($numerator / $denominator) * 100) }")
+            DISCORD_ARG="${DISCORD_ARG} Total Coverage for Certification Tests is ${totalPer}%. ${aboveThreshold} out of ${totalComps} components have certification tests with code coverage > ${threshold}%"
+            echo ${DISCORD_ARG}
+            echo "DISCORD_ARG=${DISCORD_ARG}" >> $GITHUB_ENV
+
+        # - name: Final Coverage Discord Notification
+        #   if: success() && github.event_name == 'schedule'
+        #   env:
+        #     DISCORD_WEBHOOK: ${{ secrets.DISCORD_MONITORING_WEBHOOK_URL }}
+        #   uses: Ilshidur/action-discord@0c4b27844ba47cb1c7bee539c8eead5284ce9fa9
+        #   continue-on-error: true
+        #   with:
+        #     args: '{{ DISCORD_ARG }}'
