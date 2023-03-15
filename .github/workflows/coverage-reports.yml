@@ -82,7 +82,7 @@ jobs:
         - name: Merge conformance and certification coverage reports
           run: |
             set -e
-            bash .scripts/gocovmerge.sh tmp/conf_code_cov tmp/cert_code_cov tmp/final_code_cov
+            bash .github/scripts/gocovmerge.sh tmp/conf_code_cov tmp/cert_code_cov tmp/final_code_cov
         
         - name: Generate Coverage reports for each component
           run: |
