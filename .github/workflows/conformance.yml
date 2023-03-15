@@ -334,15 +334,15 @@ jobs:
     - name: Prepare complete coverage report file to upload
       if: always()
       run: |
-        mkdir -p tmp/cover-out
-        cp cover.out tmp/cover-out/${{ env.SOURCE_PATH_LINEAR }}.out
+        mkdir -p tmp/conf_code_cov
+        cp cover.out tmp/conf_code_cov/${{ env.SOURCE_PATH_LINEAR }}.out
     
     - name: Upload coverage report file
       uses: actions/upload-artifact@v3
       if: always()
       with:
-        name: cover-out
-        path: tmp/cover-out
+        name: conf_code_cov
+        path: tmp/conf_code_cov
 
     - name: Prepare Conf Coverage Info
       if: always()
