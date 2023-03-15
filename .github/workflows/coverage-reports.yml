@@ -119,11 +119,18 @@ jobs:
             echo ${DISCORD_ARG}
             echo "DISCORD_ARG=${DISCORD_ARG}" >> $GITHUB_ENV
 
-        - name: Final Coverage Discord Notification
-          if: success() #&& github.event_name == 'schedule'
-          env:
-            DISCORD_WEBHOOK: ${{ secrets.MY_DISCORD_WEBHOOK }}
-          uses: Ilshidur/action-discord@0c4b27844ba47cb1c7bee539c8eead5284ce9fa9
-          continue-on-error: true
+        # - name: Final Coverage Discord Notification
+        #   if: success() #&& github.event_name == 'schedule'
+        #   env:
+        #     DISCORD_WEBHOOK: ${{ secrets.MY_DISCORD_WEBHOOK }}
+        #   uses: Ilshidur/action-discord@0c4b27844ba47cb1c7bee539c8eead5284ce9fa9
+        #   continue-on-error: true
+        #   with:
+        #     args: '{{ DISCORD_ARG }}'
+        
+        - name: send custom message with args
+          uses: appleboy/discord-action@master
           with:
-            args: '{{ DISCORD_ARG }}'
+            webhook_id: ${{ secrets.MY_DISCORD_WEBHOOK }}
+            webhook_token: ""
+            args: '${{ DISCORD_ARG }}'
