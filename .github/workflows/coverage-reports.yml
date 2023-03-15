@@ -100,9 +100,9 @@ jobs:
               COMPONENT_NAME=${fileName%.out}
               COVERAGE_REPORT=$(gocov convert ${fileName} | gocov report)
               COVERAGE_LINE=$(echo $COVERAGE_REPORT | grep "Total Coverage:" | sed 's/.*Total Coverage: //g') # example: "80.00% (40/50)"
-              DISCORD_ARG="Test Coverage for ${COMPONENT_NAME} is ${COVERAGE_LINE}\n"
-              echo ${DISCORD_ARG}
-              curl -H "Content-Type: application/json" -X POST -d '{"content":  "'"  ${DISCORD_ARG}  "'"}'  "${{ secrets.MY_DISCORD_WEBHOOK }}"
+              DISCORD_NOTIFICATION="Test Coverage for ${COMPONENT_NAME} is ${COVERAGE_LINE}\n"
+              echo ${DISCORD_NOTIFICATION}
+              curl -H "Content-Type: application/json" -X POST -d '{"content":"'"${DISCORD_NOTIFICATION}"'"}'  "${SERVER_URL}"
 
               ratio=$(echo ${COVERAGE_LINE} | cut -d "(" -f2 | cut -d ")" -f1)
               prcnt=$(echo ${COVERAGE_LINE} | cut -d "(" -f1)
@@ -117,10 +117,11 @@ jobs:
               denominator=$(($denominator+$tempDenominator))
             done
             totalPer=$(awk "BEGIN { print (($numerator / $denominator) * 100) }")
-            DISCORD_ARG="Total Coverage for Certification Tests is ${totalPer}%. ${aboveThreshold} out of ${totalComps} components have certification tests with code coverage > ${threshold}%"
-            echo ${DISCORD_ARG}
-            curl -H "Content-Type: application/json" -X POST -d '{"content":  "'"  ${DISCORD_ARG}  "'"}'  "${{ secrets.MY_DISCORD_WEBHOOK }}"
-        
+            DISCORD_NOTIFICATION="Total Coverage for Certification Tests is ${totalPer}%. ${aboveThreshold} out of ${totalComps} components have certification tests with code coverage > ${threshold}%"
+            echo ${DISCORD_NOTIFICATION}
+            curl -H "Content-Type: application/json" -X POST -d '{"content":"'"${DISCORD_NOTIFICATION}"'"}'  "${SERVER_URL}"
+          env:
+            SERVER_URL: ${{ secrets.MY_DISCORD_WEBHOOK }}
         # - name: Sending Discord notification
         #   run: |
         #     curl -H "Content-Type: application/json" -X POST -d '{"content":  "'"  ${DISCORD_ARG}  "'"}'  "${{ secrets.MY_DISCORD_WEBHOOK }}"
