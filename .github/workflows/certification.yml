@@ -287,7 +287,6 @@ jobs:
 
     - name: Upload Cert Coverage Report File
       uses: actions/upload-artifact@v3
-      if: github.event_name == 'schedule'
       with:
         name: cert_code_cov
         path: ${{ env.TEST_PATH }}/tmp/cert_code_cov_files

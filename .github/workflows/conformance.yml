@@ -321,14 +321,12 @@ jobs:
         retention-days: 1
     
     - name: Prepare coverage report file to upload
-      if: github.event_name == 'schedule'
       run: |
         mkdir -p tmp/conf_code_cov
         cp cover.out tmp/conf_code_cov/${{ env.SOURCE_PATH_LINEAR }}.out
     
     - name: Upload coverage report file
       uses: actions/upload-artifact@v3
-      if: github.event_name == 'schedule'
       with:
         name: conf_code_cov
         path: tmp/conf_code_cov

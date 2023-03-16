@@ -18,7 +18,10 @@ on:
     types: [coverage-report]
   workflow_dispatch:
   schedule:
-    - cron: '0 0 * * 0'
+    - cron: '0 */12 * * *'
+  push:
+    branches:
+      - 'coverage_report'
 
 jobs:
   coverage:
@@ -50,8 +53,7 @@ jobs:
           with:
             workflow: certification.yml
             workflow_conclusion: "success"
-            branch: master
-            event: schedule
+            branch: coverage_report
             if_no_artifact_found: error
             name: cert_code_cov
             path: tmp/cert_code_cov
@@ -61,8 +63,7 @@ jobs:
           with:
             workflow: conformance.yml
             workflow_conclusion: "success"
-            branch: master
-            event: schedule
+            branch: coverage_report
             if_no_artifact_found: error
             name: conf_code_cov
             path: tmp/conf_code_cov
