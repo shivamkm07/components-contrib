@@ -19,9 +19,9 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '0 */12 * * *'
-  # push:
-  #   branches:
-  #     - 'my_coverage_report'
+  push:
+    branches:
+      - 'my_coverage_report'
 
 jobs:
   coverage:
