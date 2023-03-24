@@ -53,7 +53,7 @@ jobs:
           with:
             workflow: certification.yml
             workflow_conclusion: "success"
-            branch: coverage_report
+            branch: my_coverage_report
             if_no_artifact_found: error
             name: cert_code_cov
             path: tmp/cert_code_cov
@@ -63,7 +63,7 @@ jobs:
           with:
             workflow: conformance.yml
             workflow_conclusion: "success"
-            branch: coverage_report
+            branch: my_coverage_report
             if_no_artifact_found: error
             name: conf_code_cov
             path: tmp/conf_code_cov
